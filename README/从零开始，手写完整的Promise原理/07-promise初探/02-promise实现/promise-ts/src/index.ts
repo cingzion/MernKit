@@ -24,7 +24,7 @@
  const enum STATUS { 
     pending = 'PENDING',        // 等待态
     fulfilled = 'FULFILLED',    // 标识变成、成功态
-    rejected = 'REJECTED',        // 标识变成失败态 rejected
+    reject = 'REJECTED',        // 标识变成失败态 rejected
  }
 // 一个 promise 有三个状态
  class Promise {
@@ -50,7 +50,7 @@
         // 失败的回调
         const reject = (reason?: any) => {
             if(this.status === STATUS.pending) {
-                this.status = STATUS.rejected;    // 修改失败的状态
+                this.status = STATUS.reject;    // 修改失败的状态
                 this.reason = reason;           // 修改失败原因
             }
         }
@@ -61,24 +61,8 @@
         } catch(e) {
             reject(e);
         }
-    }
 
-    // then 方法
-    /**
-     * onFulfilled
-     * onRejected
-     */
-    then(onFulfilled, onRejected) {
-        // 判断当前的状态，是不是成功
-        if(this.status === STATUS.fulfilled){
-            //  成功调成功
-            onFulfilled(this.value);
-        }
-        // 判断当前的状态， 是不是失败
-        if(this.status === STATUS.rejected){
-            // 失败调失败
-            onRejected(this.reason);
-        }
+        
     }
  } 
 
